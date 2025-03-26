@@ -44,9 +44,9 @@
 <a href="{{ url_for('home') }}" class="btn btn-outline-secondary">
 <i class="bi bi-arrow-left"></i> Continue Shopping
 </a>
-<a href="#" class="btn btn-success">
-<i class="bi bi-credit-card"></i> Proceed to Checkout
-</a>
+<a href="{{ url_for('checkout') }}" class="btn btn-success">
+    <i class="bi bi-credit-card"></i> Checkout
+    </a>
 </div>
 <!--else clause displays a message that the cart is empty if no cart has been created yet for the session-->
 {% else %}

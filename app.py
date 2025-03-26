@@ -109,5 +109,34 @@ def cart():
     total = sum(item['total'] for item in cart)
     return render_template('cart.html', cart=cart, total=total)
 
+# Route for the checkout page
+# The checkout() function displays the checkout form and order summary
+# It redirects to the home page if the cart is empty
+@app.route('/checkout')
+def checkout():
+    cart = session.get('cart', [])
+    # If cart is empty, redirect to home page
+    if not cart:
+        return redirect(url_for('home'))
+    # Calculate total cost of all items in cart
+    total = sum(item['total'] for item in cart)
+    # Render checkout page with cart and total
+    return render_template('checkout.html', cart=cart, total=total)
+
+# Route for processing the completed order
+# The complete_order() function handles form submission from checkout
+# Collects customer info, clears the cart, and shows thank you page
+@app.route('/complete_order', methods=['POST'])
+def complete_order():
+    # Get customer information from the checkout form
+    name = request.form.get('name')
+    email = request.form.get('email')
+    
+    # Clear the cart after order is completed
+    session['cart'] = []
+    
+    # Show thank you page with customer info
+    return render_template('thank_you.html', name=name, email=email)
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
